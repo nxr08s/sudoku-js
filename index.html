@@ -1,0 +1,163 @@
+<!doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Судоку</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body onload="pageInit()">
+	<div id="helpDialog" class="dialog-box dialog-box-disabled">
+		<h1>スードックー</h1>
+		<h2>С У Д О К У</h2>
+		<hr>
+		<h3>Правила</h3>
+		<p>Игровое поле представляет собой квадрат размером 9х9, разделённый на меньшие квадраты со стороной в 3 клетки. От игрока требуется заполнить свободные клетки цифрами от 1 до 9 так, чтобы в каждой строке, в каждом столбце и в каждом малом квадрате 3x3 каждая цифра встречалась бы только один раз.</p>
+	</div>
+	<div id="endGameDialog" class="dialog-box dialog-box-disabled">
+		<h1>Игра завершена!</h1>
+		<hr>
+		<p>Время игры: <span id="gameTimeSpan"></span></p>
+		<p>Открытых в начале: <span id="initialOpenedSpan"></span></p>
+		<p>Использовано подсказок: <span id="usedHintsSpan"></span></p>
+		<div class="new-game-dialog-btn" onclick="endGameDlgBtnClick()">Новая игра</div>
+	</div>
+
+	<div class="menu-box">
+		<div onclick="menuClicked()" class="menu-header">
+			<div class="menu-header-circle">
+				<div class="menu-header-line" style="margin-top: 33%;"></div>
+				<div class="menu-header-line" style="margin-top: 3px;"></div>
+				<div class="menu-header-line" style="margin-top: 3px;"></div>
+			</div>
+			<div class="menu-header-label">Меню</div>
+		</div>
+		<ul id="menu-list" class="menu-list-disabled">
+			<li onclick="newGameClicked()">Новая игра</li>
+			<hr>
+			<li onclick="infoClicked()">Справка</li>
+			<hr>
+			<li onclick="hintClicked()">Подсказка</li>
+			<hr>
+			<li onclick="resetClicked()">Сброс</li>
+		</ul>
+	</div>
+
+	<div class="timer-box">0 секунд</div>
+
+	<div class="select-number-window select-number-window-disabled">
+		<div id="rm-btn" onclick="removeBtnClicked()" class="remove-num-btn"></div>
+	</div>
+
+	<div id="grid" class="grid-container">
+		<div style="grid-column: 1; grid-row: 1" class="grid-container-internal">
+			<div id="cell-13" style="grid-column: 3; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-11" style="grid-column: 1; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-12" style="grid-column: 2; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-21" style="grid-column: 1; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-22" style="grid-column: 2; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-23" style="grid-column: 3; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-31" style="grid-column: 1; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-32" style="grid-column: 2; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-33" style="grid-column: 3; grid-row: 3;" class="grid-cell"></div>
+		</div>
+
+		<div style="grid-column: 2; grid-row: 1" class="grid-container-internal">
+			<div id="cell-14" style="grid-column: 1; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-15" style="grid-column: 2; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-16" style="grid-column: 3; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-24" style="grid-column: 1; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-25" style="grid-column: 2; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-26" style="grid-column: 3; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-34" style="grid-column: 1; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-35" style="grid-column: 2; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-36" style="grid-column: 3; grid-row: 3;" class="grid-cell"></div>
+		</div>
+
+		<div style="grid-column: 3; grid-row: 1" class="grid-container-internal">
+			<div id="cell-17" style="grid-column: 1; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-18" style="grid-column: 2; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-19" style="grid-column: 3; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-27" style="grid-column: 1; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-28" style="grid-column: 2; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-29" style="grid-column: 3; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-37" style="grid-column: 1; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-38" style="grid-column: 2; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-39" style="grid-column: 3; grid-row: 3;" class="grid-cell"></div>
+		</div>
+
+		<div style="grid-column: 1; grid-row: 2" class="grid-container-internal">
+			<div id="cell-41" style="grid-column: 1; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-42" style="grid-column: 2; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-43" style="grid-column: 3; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-51" style="grid-column: 1; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-52" style="grid-column: 2; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-53" style="grid-column: 3; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-61" style="grid-column: 1; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-62" style="grid-column: 2; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-63" style="grid-column: 3; grid-row: 3;" class="grid-cell"></div>
+		</div>
+
+		<div style="grid-column: 2; grid-row: 2" class="grid-container-internal">
+			<div id="cell-44" style="grid-column: 1; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-45" style="grid-column: 2; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-46" style="grid-column: 3; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-54" style="grid-column: 1; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-55" style="grid-column: 2; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-56" style="grid-column: 3; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-64" style="grid-column: 1; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-65" style="grid-column: 2; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-66" style="grid-column: 3; grid-row: 3;" class="grid-cell"></div>
+		</div>
+
+		<div style="grid-column: 3; grid-row: 2" class="grid-container-internal">
+			<div id="cell-47" style="grid-column: 1; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-48" style="grid-column: 2; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-49" style="grid-column: 3; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-57" style="grid-column: 1; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-58" style="grid-column: 2; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-59" style="grid-column: 3; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-67" style="grid-column: 1; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-68" style="grid-column: 2; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-69" style="grid-column: 3; grid-row: 3;" class="grid-cell"></div>
+		</div>
+
+		<div style="grid-column: 1; grid-row: 3" class="grid-container-internal">
+			<div id="cell-71" style="grid-column: 1; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-72" style="grid-column: 2; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-73" style="grid-column: 3; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-81" style="grid-column: 1; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-82" style="grid-column: 2; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-83" style="grid-column: 3; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-91" style="grid-column: 1; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-92" style="grid-column: 2; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-93" style="grid-column: 3; grid-row: 3;" class="grid-cell"></div>
+		</div>
+
+		<div style="grid-column: 2; grid-row: 3" class="grid-container-internal">
+			<div id="cell-74" style="grid-column: 1; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-75" style="grid-column: 2; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-76" style="grid-column: 3; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-84" style="grid-column: 1; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-85" style="grid-column: 2; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-86" style="grid-column: 3; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-94" style="grid-column: 1; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-95" style="grid-column: 2; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-96" style="grid-column: 3; grid-row: 3;" class="grid-cell"></div>
+		</div>
+		<div style="grid-column: 3; grid-row: 3" class="grid-container-internal">
+			<div id="cell-77" style="grid-column: 1; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-78" style="grid-column: 2; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-79" style="grid-column: 3; grid-row: 1;" class="grid-cell"></div>
+			<div id="cell-87" style="grid-column: 1; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-88" style="grid-column: 2; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-89" style="grid-column: 3; grid-row: 2;" class="grid-cell"></div>
+			<div id="cell-97" style="grid-column: 1; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-98" style="grid-column: 2; grid-row: 3;" class="grid-cell"></div>
+			<div id="cell-99" style="grid-column: 3; grid-row: 3;" class="grid-cell"></div>
+		</div>
+	</div>
+	<div id="blur-layer" class="blur-layer blur-layer-disabled"></div>
+    <div id="error-box" class="error-box-disabled"></div>
+    <script src="main.js"></script>
+</body>
+</html>
