@@ -2,9 +2,9 @@
 	font-family: sans-serif;
 	box-sizing: border-box;
 }
-body {
-	margin: 0;
-}
+
+body { margin: 0; }
+
 #error-box {
 	font-size: 125%;
 	position: absolute;
@@ -15,9 +15,9 @@ body {
 	border-radius: 25px;
 	transition: 0.2s;
 }
-.error-box-disabled {
-	opacity: 0;
-}
+
+.error-box-disabled { opacity: 0; }
+
 .grid-container {
 	padding: 5px;
 	margin-top: 10%;
@@ -39,6 +39,7 @@ body {
 	grid-template-columns: 	1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr;
 }
+
 .grid-container-internal {
 	display: grid;
 	grid-template-columns: 	1fr 1fr 1fr;
@@ -74,9 +75,7 @@ body {
 	transition: 0.2s;
 }
 
-.grid-cell-highlight {
-	background-color: #888;
-}
+.grid-cell-highlight { background-color: #888; }
 
 .grid-cell-available:hover {
 	background: #e6e6e6;
@@ -91,10 +90,10 @@ body {
 	backdrop-filter: brightness(75%) blur(2px);
 	transition: 0.1s;
 }
+
 .blur-layer-disabled {
 	opacity: 0;
 	z-index: -1;
-
 }
 
 .select-number-window {
@@ -106,12 +105,12 @@ body {
 	margin: auto;
 	width: 220px;
 	height: 220px;
-	/*background-color: gray;*/
 	z-index: 3;
 	transition: 0.2s;
 	border-radius: 50%;
 	background-color: #d2d2d2a0;
 }
+
 .select-number-window-disabled {
 	opacity: 0;
 	transform: scale(0.5);
@@ -133,13 +132,14 @@ body {
 	transition: 0.2s;
 	cursor: pointer;
 }
-.remove-btn-disabled {
-	display: none;
-}
+
+.remove-btn-disabled { display: none; }
+
 .remove-num-btn:hover {
 	transition: 0.2s;
 	transform: scale(1.1);
 }
+
 .remove-num-btn::after {
 	content: "";
 	position: absolute;
@@ -154,6 +154,7 @@ body {
 	background: black;
 	border-radius: 5px;
 }
+
 .remove-num-btn::before {
 	content: "";
 	position: absolute;
@@ -168,6 +169,7 @@ body {
 	background: black;
 	border-radius: 5px;
 }
+
 .select-number-value {
 	position: absolute;
 	font-size: 200%;
@@ -176,6 +178,7 @@ body {
 	user-select: none;
 	cursor: pointer;
 }
+
 .select-number-value:hover {
 	transition: 0.2s;
 	transform: scale(1.2);
@@ -259,9 +262,7 @@ li:hover {
 	transition: 0.2s;
 }
 
-.menu-header-circle-active {
-	transform: rotate(90deg);
-}
+.menu-header-circle-active { transform: rotate(90deg); }
 
 .menu-header-label {
 	padding-left: 10px;
@@ -341,6 +342,4 @@ hr {
 	user-select: none;
 }
 
-.new-game-dialog-btn:hover {
-	background: lightgray;
-}
+.new-game-dialog-btn:hover { background: lightgray; }
