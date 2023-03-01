@@ -1,6 +1,11 @@
 # Sudoku game
 Simple pure js+html+css sudoku game
 
+![main window](img/main.png)
+![select](img/select.png)
+![menu](img/menu.png)
+![help](img/help.png)
+
 ## Todo:
 - [ ] Refract JS code (make classes, instead of bunch of functions)
 - [ ] Fix timer bug (sometimes it shows random values)
